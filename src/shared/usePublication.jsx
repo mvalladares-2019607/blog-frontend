@@ -35,6 +35,7 @@ export const usePublication = () => {
 
         if(response.error){
             console.log(response.error)
+            
             return toast.error(response.e?.response?.data || 'Ocurrió un error al agregar, intenta de nuevo')
         }
 

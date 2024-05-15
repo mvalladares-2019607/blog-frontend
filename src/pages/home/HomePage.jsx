@@ -4,8 +4,7 @@ import { Content } from "../../components/dashboardPage/Content";
 import { usePublication } from "../../shared/usePublication";
 import { LoadSpinner } from "../../components/LoadSpinner";
 import { useLocation } from "react-router-dom";
-import '../style.css';
-
+import '../style.css'
 
 
 export const HomePage = () => {
@@ -26,7 +25,7 @@ export const HomePage = () => {
         <div>
             <Navbar/>
             {showBanner && (
-                <header style={{ backgroundImage: `url(${bannerImage})`, height: "90vh", backgroundSize: "cover", backgroundPosition: "center" }}>
+                <header>
                 </header>
             )}
             <Content posts={allPosts} getPosts={getPosts}/>

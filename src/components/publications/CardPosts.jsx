@@ -1,35 +1,25 @@
 import React from "react";
-import './styles.css';
 
-export const Card = ({
-  title,
-  img,
-  description,
-  author,
-  url,
-}) => {
+export const Card = ({ data }) => {
+
+  const { title, img, description, author, url } = data;
+
   return (
-    <div className="card-container">
-      <div className="card">
-        <img
-          src={img}
-          alt={title}
-        />
-        <div className="card-content">
-          <h2 className="card-title">{title}</h2>
-          <p className="card-description">{description}</p>
-          <div className="card-footer">
-            <p className="card-author">{author}</p>
-            <a
-              href={url}
-              className="card-link"
-            >
-              Link repository
-            </a>
+    <>
+      <div className="card w-96 bg-base-100 shadow-2xl">
+        <figure><img src={img} alt={title} /></figure>
+        <div className="card-body">
+          <h2 className="card-title">
+            {title}
+          </h2>
+          <p>{description}</p>
+          <div className="card-actions justify-end">
+            <div className="badge badge-outline">Author: {author}</div>
+            <a href={url} className="badge badge-outline">Repository</a>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

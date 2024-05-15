@@ -1,138 +1,63 @@
 import React, { useState } from "react";
 import { usePublication } from "../../shared/usePublication";
 import toast from "react-hot-toast";
+import { useForm } from 'react-hook-form';
+
+
 
 export const AddPost = ({ switchPostHandler }) => {
     const { addPost, getPosts, isLoading } = usePublication();
-
-    const [formState, setFormState] = useState({
-        title: {
-            value: '',
-            isValid: false,
-            showError: false
-        },
-        img: {
-            value: '',
-            isValid: false,
-            showError: false
-        },
-        description: {
-            value: '',
-            isValid: false,
-            showError: false
-        },
-        author: {
-            value: '',
-            isValid: false,
-            showError: false
-        },
-        url: {
-            value: '',
-            isValid: false,
-            showError: false
-        }
-    });
-
-    const handleInputValueChange = (value, field) => {
-        setFormState(prevState => ({
-            ...prevState,
-            [field]: {
-                ...prevState[field],
-                value
-            }
-        }));
-    }
-
-    const handleAddPost = async event => {
-        event.preventDefault();
-        const { title, img, description, author, url } = formState;
-        await addPost(title.value, img.value, description.value, author.value, url.value);
-        setFormState({
-            title: {
-                value: '',
-                isValid: false,
-                showError: false
-            },
-            img: {
-                value: '',
-                isValid: false,
-                showError: false
-            },
-            description: {
-                value: '',
-                isValid: false,
-                showError: false
-            },
-            author: {
-                value: '',
-                isValid: false,
-                showError: false
-            },
-            url: {
-                value: '',
-                isValid: false,
-                showError: false
-            }
-        });
-        await getPosts();
-    }
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const onSubmit = async (data) => {
+        await addPost(data.title, data.img, data.description, data.author, data.url);
+    };
 
     return (
-        <div className="form-card-container">
-            <div className="form-card">
-                <form className="form" onSubmit={handleAddPost}>
-                    <div className="form-group">
-                        <input
-                            type="text"
-                            placeholder="Title"
-                            value={formState.title.value}
-                            onChange={event => handleInputValueChange(event.target.value, 'title')}
-                            className="form-control"
-                        />
+        <>
+            <div className="min-h-screen flex items-center justify-center bg-gray-100">
+                <form className="w-full max-w-lg bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit(onSubmit)}>
+                    <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="title">
+                            Title
+                        </label>
+                        <input className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.title ? 'border-red-500' : 'border-gray-200'}`} id="title" type="text" placeholder="Title" {...register("title", { required: true })} />
+                        {errors.title && <p className="text-red-500 text-xs italic">Please enter a title</p>}
                     </div>
-                    <div className="form-group">
-                        <input
-                            type="text"
-                            placeholder="image"
-                            value={formState.img.value}
-                            onChange={event => handleInputValueChange(event.target.value, 'img')}
-                            className="form-control"
-                        />
+                    <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="image">
+                            Image
+                        </label>
+                        <input className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.img ? 'border-red-500' : 'border-gray-200'}`} id="img" type="text" placeholder="Image URL" {...register("img", { required: true })} />
+                        {errors.img && <p className="text-red-500 text-xs italic">Please enter an image URL</p>}
                     </div>
-                    <div className="form-group">
-                        <textarea
-                            placeholder="Description"
-                            value={formState.description.value}
-                            onChange={event => handleInputValueChange(event.target.value, 'description')}
-                            className="form-control"
-                        />
+                    <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
+                            Description
+                        </label>
+                        <textarea className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.description ? 'border-red-500' : 'border-gray-200'}`} id="description" placeholder="Description" {...register("description", { required: true })} />
+                        {errors.description && <p className="text-red-500 text-xs italic">Please enter a description</p>}
                     </div>
-                    <div className="form-group">
-                        <input
-                            type="text"
-                            placeholder="Author"
-                            value={formState.author.value}
-                            onChange={event => handleInputValueChange(event.target.value, 'author')}
-                            className="form-control"
-                        />
+                    <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="author">
+                            Author
+                        </label>
+                        <input className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.author ? 'border-red-500' : 'border-gray-200'}`} id="author" type="text" placeholder="Author" {...register("author", { required: true })} />
+                        {errors.author && <p className="text-red-500 text-xs italic">Please enter an author</p>}
                     </div>
-                    <div className="form-group">
-                        <input
-                            type="text"
-                            placeholder="Link repository"
-                            value={formState.url.value}
-                            onChange={event => handleInputValueChange(event.target.value, 'url')}
-                            className="form-control"
-                        />
+                    <div className="mb-6">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="link">
+                            Link
+                        </label>
+                        <input className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.url ? 'border-red-500' : 'border-gray-200'}`} id="url" type="text" placeholder="Link" {...register("url", { required: true })} />
+                        {errors.url && <p className="text-red-500 text-xs italic">Please enter a link</p>}
                     </div>
-                    <div className="form-group">
-                        <button type="submit" className="btn-submit">
+                    <div className="flex items-center justify-center">
+                        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                             Add post
                         </button>
                     </div>
                 </form>
-                <span onClick={switchPostHandler}></span>
             </div>
-        </div>
+        </>
     );
 };

@@ -1,26 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './styles.css';
 
 export const Navbar = () => {
   return (
-    <div>
-      <div className="navbar">
+    <>
+
+      <div className="navbar bg-cyan-800 shadow-2xl">
         <div className="flex-1">
-          <Link className="btn-ghost">Blog</Link>
+          <a className="btn btn-ghost text-xl text-white">Mi blog</a>
         </div>
         <div className="flex-none">
-          <ul className="menu-horizontal">
-            <li>
-              <Link to="/posts" className="btn-ghost">Posts</Link>
-            </li>
-            <li>
-              <Link to="/create" className="btn-ghost">Create</Link>
-            </li>
+          <ul className="menu menu-horizontal px-1">
+            <li> <Link to="/posts" className='text-white text-xl	 font-bold'>Posts</Link></li>
+            <li> <Link to="/create" className='text-white text-xl	 font-bold'>Create</Link></li>
           </ul>
         </div>
       </div>
-    </div>
+    </>
+
   );
 };
 
